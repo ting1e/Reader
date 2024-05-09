@@ -3,6 +3,6 @@ db.*
 test.py
 */__pycache__*
 */*/__pycache__*
-git_ignore
-storage_local
-storage_upload
+git_ignore/
+storage_local/
+storage_upload/
