@@ -15,12 +15,16 @@ class Book(models.Model):
     name = models.CharField(max_length=64)
     author = models.CharField(max_length=64)
     book_grp = models.IntegerField(default=0)
-    intro  = models.CharField(max_length=256)
+    intro  = models.CharField(max_length=512)
+    rule = models.CharField(max_length=256)
     word_count = models.IntegerField(default=0)
-
     total_chapter_num = models.IntegerField(default=0)
+
     first_chapter_title = models.CharField(max_length=64)
+    first_chapter_id = models.IntegerField(default=0)
     last_chapter_title = models.CharField(max_length=64)
+    last_chapter_id = models.IntegerField(default=0)
+
 
     uploader = models.IntegerField(default=0)
     upload_time = models.DateTimeField(default = timezone.now)

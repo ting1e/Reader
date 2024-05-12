@@ -17,7 +17,7 @@
       {% for book in book_list %}
       <div class="col-4 col-lg-2" >
         <a href="{% url 'reader:book' book.id %}" style="text-decoration: none;color:#333;">
-        <!-- <div onclick="window.location.href= '{% url 'reader:book_reader' book.id book.first_chapter %}' ;return false"> -->
+        <!-- <div onclick="window.location.href= '{% url 'reader:book_reader' book.id book.first_chapter_id %}' ;return false"> -->
           <div class="card mb-4 border-0" >
             <img src="{% static 'images/1.jpg' %}" class="w-100 h-100 mb-0 me-0"> 
             <div class="text-break w-100 overflow-hidden mt-4 book-tittle">
