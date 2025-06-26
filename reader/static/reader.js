@@ -7,7 +7,7 @@ var offcanvasBottom = new bootstrap.Offcanvas($('.offcanvas-bottom-all'))
 var offcanvasSetting = new bootstrap.Offcanvas($('.offcanvas-bottom-setting'))
 
 var page_width = $('article').width() + parseInt($('article').css('column-gap'))
-var page_num = parseInt(($('#marker').offset().left - $('article').offset().left)/ page_width +2)
+var page_num = parseInt(($('#marker').offset().left - $('article').offset().left)/ page_width +1)
 var page_contents_len = new Array(page_num + 1 ).fill(0);
 var modal = new bootstrap.Modal($(".myModal")) // Returns a Bootstrap modal instance\
 

@@ -4,6 +4,8 @@ from django.views import generic
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+
 from . import form_book
 
 class BookListView(generic.ListView):
@@ -18,6 +20,46 @@ class BookListView(generic.ListView):
             return Book.objects.filter(share = True)
         
 
+
+@login_required(login_url='reader:index')        
+def BookView(request):
+    if request.method == 'POST':
+        book_id = request.POST.get('book_id')  # 获取表单提交的 book_id
+        chapter_id = request.POST.get('chapter_id') 
+        print(chapter_id)
+        _book = get_object_or_404(Book,id = int(book_id))
+        if _book.share == True or _book.uploader == request.user.id or request.user.is_superuser == 1:
+            pass
+        else:
+            return redirect('reader:index')
+        # book = Book.objects.get(id=book_id)  # 根据 ID 获取书籍对象
+        if chapter_id==None:
+
+            chapter_list = Chapter.objects.filter(book_id = book_id)
+            cur_chpt = chapter_list[0]
+            offset = 0
+            with open(_book.book_url,'r',encoding=_book.charset) as f:
+                content = f.read()[cur_chpt.start:cur_chpt.end]
+                # print(content)
+                content = content.split('\n')
+
+                chapter_view = render_to_string('chapter_view.html',{'chapter_title':cur_chpt.title,'content_lines':content})
+                return render(request, 'book_view.html', {'chapter_title':cur_chpt.title,'chapter_list':chapter_list,'content_lines':content,'progess':20,
+                                                        'book_id':book_id,'chapter_id':cur_chpt.id,'chapter_view':chapter_view})
+        else:
+            cur_chpt = get_object_or_404(Chapter,pk = chapter_id)
+            chapter_list = Chapter.objects.filter(book_id = book_id)
+            with open(_book.book_url,'r',encoding=_book.charset) as f:
+                content = f.read()[cur_chpt.start:cur_chpt.end]
+                # print(content)
+                content = content.split('\n')
+
+                chapter_view = render_to_string('chapter_view.html',{'chapter_title':cur_chpt.title,'content_lines':content})
+                return render(request, 'book_view.html', {'chapter_title':cur_chpt.title,'chapter_list':chapter_list,'content_lines':content,'progess':20,
+                                                        'book_id':book_id,'chapter_id':cur_chpt.id,'chapter_view':chapter_view})
+            
+
+    return HttpResponse('get')
  
 # def book_reader(request,book_pk):
 #     if  request.method == 'POST':

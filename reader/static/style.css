@@ -133,3 +133,10 @@ article{
 	text-align: center; 
 	display: block;
 }
+
+button {
+	all: unset;
+	display: block;
+	width: 100%;
+	cursor: pointer;
+}

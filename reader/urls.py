@@ -28,4 +28,7 @@ urlpatterns = [
     path('null', views.ret_null   , name='null'),
     path('test/', views.test_requset   , name='test'),
 
+
+    path('view/', views.BookView, name='book_view'),
+
 ]
